@@ -32,7 +32,7 @@ const QRCode = () => {
   };
 
   return (
-    <Box w={300}>
+    <Box w={300} mx="auto">
       <Text fontWeight="bold" fontFamily="Poppins" fontSize={20} textAlign="center" p={5}>
         qreview.com
       </Text>
