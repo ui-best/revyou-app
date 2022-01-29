@@ -1,14 +1,22 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
+import React from "react";
+import ReactDOM from "react-dom";
+import "./index.css";
+import App from "./App";
+import reportWebVitals from "./reportWebVitals";
+
+// @ts-ignore
+import BarcodeDetector from "barcode-detector";
+
+// polyfill unless already supported
+if (!("BarcodeDetector" in window)) {
+  (window as any).BarcodeDetector = BarcodeDetector;
+}
 
 ReactDOM.render(
   <React.StrictMode>
     <App />
   </React.StrictMode>,
-  document.getElementById('root')
+  document.getElementById("root")
 );
 
 // If you want to start measuring performance in your app, pass a function
