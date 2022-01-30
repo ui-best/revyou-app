@@ -1,11 +1,13 @@
 import { Text, Box, Container, Divider } from "@chakra-ui/react";
 import { useCallback, useEffect, useState } from "react";
+import { useNavigate } from "react-router";
 import BottomBar from "../components/BottomBar";
 import LocationCard from "../components/LocationCard";
 import PlaceService from "../services/place-service";
 
 const Places = () => {
   const [suggested, setSuggested] = useState<any[]>([]);
+  const navigate = useNavigate();
 
   const load = useCallback(async () => {
     const sugg = await PlaceService.getSuggested();
@@ -18,7 +20,7 @@ const Places = () => {
 
   return (
     <Container maxW="full" p={0}>
-      <Box p={7}>
+      <Box p={7} align="center">
         <Text fontFamily="Poppins" fontSize={32} letterSpacing={0} fontWeight="bold">
           Places
         </Text>
@@ -27,8 +29,8 @@ const Places = () => {
           Featured
         </Text>
         {suggested.map((data) => (
-          <Box my={5}>
-            <LocationCard data={data} large />
+          <Box key={data.id} my={5}>
+            <LocationCard data={data} large onClick={() => navigate(`/feed/${data.id}`)} />
           </Box>
         ))}
         <Divider my={10} />
@@ -36,15 +38,9 @@ const Places = () => {
           Recent
         </Text>
 
-        <Box my={5}>
-          <LocationCard data={{}} large />
-        </Box>
-        <Box my={5}>
-          <LocationCard data={{}} large />
-        </Box>
-        <Box my={5}>
-          <LocationCard data={{}} large />
-        </Box>
+        <Text fontFamily="Poppins" fontSize={18}>
+          No Recent Places
+        </Text>
       </Box>
 
       <BottomBar />
