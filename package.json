@@ -6,6 +6,7 @@
     "@chakra-ui/react": "^1.8.1",
     "@emotion/react": "11",
     "@emotion/styled": "11",
+    "axios": "^0.25.0",
     "barcode-detector": "^1.0.0",
     "framer-motion": "5",
     "qr-code-styling": "^1.6.0-rc.1",
@@ -15,6 +16,7 @@
     "react-router-dom": "6",
     "react-scripts": "5.0.0",
     "recharts": "^2.1.8",
+    "scroll-snap": "^4.0.2",
     "typescript": "^4.4.2",
     "web-vitals": "^2.1.0"
   },
