@@ -4,12 +4,12 @@ import { useCallback, useEffect, useRef } from "react";
 import TestImg from "../assets/test.png";
 import LogoImg from "../assets/logo.png";
 
-const QRCode = ({ data }: { data: string }) => {
+const QRCode = ({ data, icon }: { data: string; icon?: string }) => {
   const ref = useRef<HTMLDivElement>(null);
 
   const generate = useCallback(() => {
     const qrCode = new QRCodeStyling({
-      data,
+      data: "https://revyou.digital/feed/concordia-demo",
       width: 300,
       height: 300,
       type: "svg",
@@ -26,7 +26,7 @@ const QRCode = ({ data }: { data: string }) => {
     });
 
     qrCode.append(ref.current!);
-  }, [data]);
+  }, [data, icon]);
 
   useEffect(() => {
     generate();
