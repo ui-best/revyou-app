@@ -4,13 +4,14 @@ import { ReactComponent as PlayIcon } from "../assets/icons/play.svg";
 import { ReactComponent as PlusIcon } from "../assets/icons/plus.svg";
 import { ReactComponent as ScanIcon } from "../assets/icons/scan.svg";
 import { ReactComponent as AccountIcon } from "../assets/icons/account.svg";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useRef, useState } from "react";
 import PostModal from "./PostModal";
 import AccountModal from "./AccountModal";
 
 const BottomBar = () => {
   const navigate = useNavigate();
+  const { id } = useParams();
   const [showAccountModal, setShowAccountModal] = useState(false);
   const [file, setFile] = useState<File>();
   const inputRef = useRef<HTMLInputElement>(null);
@@ -24,14 +25,16 @@ const BottomBar = () => {
 
   return (
     <>
-      <Stack direction="row" pos="fixed" bottom={0} left="50%" transform="translateX(-50%)" w="100%" h="56px" bg="black" align="center" justify="space-between" px={10} maxW={800}>
-        <HomeIcon color="#fff" width={30} height={30} onClick={() => navigate("/")} />
-        <PlayIcon color="#fff" width={30} height={30} onClick={() => navigate("/places")} />
-        <Box bg="blue.600" rounded="xl" py={1} px={3} onClick={() => inputRef.current!.click()}>
-          <PlusIcon color="#fff" width={30} height={30} />
-        </Box>
-        <ScanIcon color="#fff" width={25} height={25} onClick={() => navigate("/scan")} />
-        <AccountIcon color="#fff" width={30} height={30} onClick={() => setShowAccountModal(true)} />
+      <Stack pos="fixed" bottom={0} left="50%" transform="translateX(-50%)" w="100vw" h="56px" bg="black" justify="center" align="center" px={10}>
+        <Stack direction="row" align="center" justify="space-between" maxW={800} w="100%">
+          <HomeIcon color="#fff" width={30} height={30} onClick={() => navigate("/")} />
+          <PlayIcon color="#fff" width={30} height={30} onClick={() => navigate("/places")} />
+          <Box bg="blue.600" rounded="xl" py={1} px={3} onClick={() => inputRef.current!.click()}>
+            <PlusIcon color="#fff" width={30} height={30} />
+          </Box>
+          <ScanIcon color="#fff" width={25} height={25} onClick={() => navigate("/scan")} />
+          <AccountIcon color="#fff" width={30} height={30} onClick={() => setShowAccountModal(true)} />
+        </Stack>
       </Stack>
 
       <PostModal
