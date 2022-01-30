@@ -1,39 +1,65 @@
-import { Modal, ModalOverlay, ModalContent, Text, Stack, Progress } from "@chakra-ui/react";
-import { useEffect, useRef, useState } from "react";
+import { Modal, ModalOverlay, ModalContent, Text, Stack, Button, Progress } from "@chakra-ui/react";
+import { useState } from "react";
 import PostService from "../services/post-service";
+import Rating from "react-rating";
+import { ReactComponent as StarIcon } from "../assets/icons/star.svg";
 
-const PostModal = ({ open, onClose }: { open: boolean; onClose: () => void }) => {
-  const inputRef = useRef<HTMLInputElement>(null);
+let interval: NodeJS.Timer;
+
+const PostModal = ({ file, open, onClose }: { file: any; open: boolean; onClose: () => void }) => {
+  const [rating, setRating] = useState<number | undefined>();
+  const [rated, setRated] = useState(false);
   const [uploading, setUploading] = useState(false);
   const [progress, setProgress] = useState(0);
+  const [succeeded, setSucceeded] = useState(false);
 
-  useEffect(() => {
-    if (open) {
-      inputRef.current!.click();
-    }
-  }, [open]);
+  const finish = () => {
+    clearInterval(interval);
+    setUploading(false);
+    setProgress(0);
+    clearInterval(interval);
+    setRating(undefined);
+    setSucceeded(false);
+    onClose();
+  };
 
   const upload = async () => {
     setUploading(true);
-    let file = inputRef.current?.files?.[0];
 
-    const interval = setInterval(() => {
+    interval = setInterval(() => {
       setProgress(PostService.progress);
       if (progress >= 100) {
-        clearInterval(interval);
-        setUploading(false);
-        setProgress(0);
-        onClose();
+        finish();
       }
     }, 500);
 
     try {
       if (file) {
-        await PostService.upload(file, null);
+        await PostService.upload(file, rating);
       }
+      setSucceeded(true);
     } catch (err) {
-      clearInterval(interval);
+      clearInterval();
     }
+  };
+
+  const RatingContent = () => {
+    return (
+      <Stack pt="100px" h="100%" align="center" justify="center" spacing={10}>
+        <Text fontFamily="Poppins" fontSize={23} fontWeight="bold">
+          Leave a rating?
+        </Text>
+        <Rating onChange={(value) => setRating(value)} emptySymbol={<StarIcon width={50} height={50} color="#ccc" />} fullSymbol={<StarIcon width={50} height={50} color="#1350ff" />} />
+        <Button
+          onClick={() => {
+            upload();
+            setRated(true);
+          }}
+        >
+          Continue
+        </Button>
+      </Stack>
+    );
   };
 
   const UploadingContent = () => {
@@ -47,17 +73,21 @@ const PostModal = ({ open, onClose }: { open: boolean; onClose: () => void }) =>
     );
   };
 
-  return (
-    <>
-      <Modal isOpen={uploading} onClose={onClose} isCentered>
-        <ModalOverlay />
-        <ModalContent minH={400} m={5} rounded="2xl">
-          {uploading ? UploadingContent() : null}
-        </ModalContent>
-      </Modal>
+  const SuccessContent = () => {
+    return (
+      <>
+        <Button onClick={finish}>Yay!</Button>
+      </>
+    );
+  };
 
-      <input ref={inputRef} type="file" capture="environment" accept="video/*" onChange={upload} style={{ display: "none" }} />
-    </>
+  return (
+    <Modal isOpen={open} onClose={finish} isCentered>
+      <ModalOverlay />
+      <ModalContent minH={400} m={5} rounded="2xl">
+        {!rated ? RatingContent() : succeeded ? SuccessContent() : uploading ? UploadingContent() : null}
+      </ModalContent>
+    </Modal>
   );
 };
 
