@@ -25,7 +25,14 @@ const Home = () => {
           <Box my="50px" textAlign="left" px={{ base: 5, lg: 20 }}>
             <Text mt={10} mb={5} color="#1350ff" fontSize={17} lineHeight={1} fontWeight="600" letterSpacing={0} whiteSpace="nowrap">
               <Image src={DevpostLogo} w="25px" display="inline" mr={2} verticalAlign="middle" />
-              <Text mr={3} display="inline">
+              <Text
+                mr={3}
+                display="inline"
+                onClick={() => {
+                  window.location.href = "https://devpost.com/software/revyou";
+                }}
+                _hover={{ cursor: "pointer", textDecoration: "underline" }}
+              >
                 Check out our project on Devpost
               </Text>
               <ArrowRightIcon width="18px" style={{ display: "inline", verticalAlign: "middle" }} />
@@ -45,7 +52,7 @@ const Home = () => {
           <Box pos="relative" mx="auto" h={605}>
             <Image src={HeroGraphic} w={320} h="100%" />
             <Box pos="absolute" h={530} top="37px" left="50%" borderRadius={20} overflow="hidden" transform="translateX(-50%)" width="250px" zIndex={-1}>
-              <video src={HeroVideo} muted autoPlay loop style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+              <video src={HeroVideo} muted autoPlay loop playsInline style={{ width: "100%", height: "100%", objectFit: "cover" }} />
             </Box>
             <Image pos="absolute" maxW="unset" right={-350} bottom="-100px" src={EiffelTowerImg} w="700px" />
             <Image pos="absolute" left="-30px" bottom="20px" src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d0/QR_code_for_mobile_English_Wikipedia.svg/220px-QR_code_for_mobile_English_Wikipedia.svg.png" w={150} bg="#fff" shadow="xl" rounded="xl" p={3} />
