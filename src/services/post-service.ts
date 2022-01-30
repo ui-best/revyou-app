@@ -1,16 +1,16 @@
 import axios from "axios";
 
-const API_URL = "http://10.0.0.113:8080";
+const API_URL = "https://api.revyou.digital";
 
 class PostService {
   static progress = 0;
 
-  static async upload(file: File, rating?: number) {
+  static async upload(id: string, file: File, rating?: number) {
     const formData = new FormData();
     formData.append("file", file);
     const res = await axios.post(API_URL + "/upload", formData, {
       headers: { "Content-Type": "multipart/form-data" },
-      params: { userId: "123", placeId: "123" },
+      params: { userId: "123", placeId: id, rating },
       onUploadProgress: (progressEvent) => {
         this.progress = Math.round((progressEvent.loaded * 100) / progressEvent.total);
       },
