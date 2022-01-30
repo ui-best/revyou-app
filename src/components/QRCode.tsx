@@ -1,7 +1,6 @@
 import { Image, Box, Text } from "@chakra-ui/react";
 import QRCodeStyling from "qr-code-styling";
 import { useCallback, useEffect, useRef } from "react";
-import TestImg from "../assets/test.png";
 import LogoImg from "../assets/logo.png";
 
 const QRCode = ({ data, icon }: { data: string; icon?: string }) => {
@@ -9,11 +8,11 @@ const QRCode = ({ data, icon }: { data: string; icon?: string }) => {
 
   const generate = useCallback(() => {
     const qrCode = new QRCodeStyling({
-      data: "https://revyou.digital/feed/concordia-demo",
+      data,
       width: 300,
       height: 300,
       type: "svg",
-      image: TestImg,
+      image: icon,
       dotsOptions: {
         color: "#000000",
         type: "rounded",
