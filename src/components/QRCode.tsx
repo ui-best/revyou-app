@@ -1,18 +1,15 @@
-import { Box, Text } from "@chakra-ui/react";
+import { Image, Box, Text } from "@chakra-ui/react";
 import QRCodeStyling from "qr-code-styling";
-import { useEffect, useRef } from "react";
+import { useCallback, useEffect, useRef } from "react";
 import TestImg from "../assets/test.png";
+import LogoImg from "../assets/logo.png";
 
-const QRCode = () => {
+const QRCode = ({ data }: { data: string }) => {
   const ref = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
-    generate();
-  }, []);
-
-  const generate = () => {
+  const generate = useCallback(() => {
     const qrCode = new QRCodeStyling({
-      data: "https://qreview.com/feed/12345678910",
+      data,
       width: 300,
       height: 300,
       type: "svg",
@@ -29,16 +26,21 @@ const QRCode = () => {
     });
 
     qrCode.append(ref.current!);
-  };
+  }, [data]);
+
+  useEffect(() => {
+    generate();
+  }, [generate]);
 
   return (
     <Box w={300} mx="auto">
-      <Text fontWeight="bold" fontFamily="Poppins" fontSize={20} textAlign="center" p={5}>
-        qreview.com
+      <Image src={LogoImg} h="100%" />
+      <Text fontWeight="bold" fontFamily="Poppins" fontSize={20} textAlign="center" px={5} mb={3}>
+        www.revyou.digital
       </Text>
       <div ref={ref} />
       <Text fontWeight="bold" fontFamily="Poppins" fontSize={17} textAlign="center" p={5}>
-        Scan QR with your camera or visit qreview.com to view videos.
+        Scan QR with your camera or visit revyou.digital to view videos.
       </Text>
     </Box>
   );

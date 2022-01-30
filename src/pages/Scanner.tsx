@@ -12,11 +12,11 @@ const Scanner = () => {
 
   const load = useCallback(async () => {
     const qrScanner = new QRScanner(ref.current!, (result) => {
-      if (!result.startsWith("https://qreview.com/feed/")) {
+      if (!result.startsWith("https://revyou.digital/feed/")) {
         setErrorMsg("Scanned an invalid code!");
         return;
       }
-      const code = result.replace("https://qreview.com/feed/", "");
+      const code = result.replace("https://revyou.digital/feed/", "");
       navigate(`/feed/${code}`);
     });
     await qrScanner.start();
