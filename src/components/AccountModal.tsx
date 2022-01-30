@@ -2,6 +2,7 @@ import { Modal, ModalOverlay, ModalContent, Box, Text, Button } from "@chakra-ui
 import { useState } from "react";
 import { ReactComponent as ScanIcon } from "../assets/icons/scan.svg";
 import CreatePlaceModal from "./CreatePlaceModal";
+import { ReactComponent as CloseIcon } from "../assets/icons/close.svg";
 
 const AccountModal = ({ open, onClose }: { open: boolean; onClose: () => void }) => {
   const [showPlaceModal, setShowPlaceModal] = useState(false);
@@ -10,7 +11,9 @@ const AccountModal = ({ open, onClose }: { open: boolean; onClose: () => void })
     <>
       <Modal isOpen={open} onClose={onClose} isCentered>
         <ModalOverlay />
-        <ModalContent m={2} align="center" minH={400} w="100%" maxW="md" shadow="lg" mx="auto" py="80px" borderRadius="20px" overflow="hidden" px={12} spacing={3} fontFamily="Poppins">
+        <ModalContent m={2} align="center" minH={200} w="96%" maxW="md" shadow="lg" mx="auto" py="80px" borderRadius="20px" overflow="hidden" px={12} spacing={3} fontFamily="Poppins">
+          <CloseIcon style={{ position: "absolute", top: 20, right: 20, zIndex: 100, width: 30, height: 30 }} onClick={onClose} />
+
           <Text fontFamily="Poppins" fontSize={22} letterSpacing={0} fontWeight="bold">
             Create your QR Code
           </Text>

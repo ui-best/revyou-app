@@ -1,12 +1,14 @@
-import { Modal, ModalOverlay, ModalContent, Text, Stack, Button, Progress } from "@chakra-ui/react";
+import { Image, Modal, ModalOverlay, ModalContent, Text, Stack, Button, Progress } from "@chakra-ui/react";
 import { useState } from "react";
 import PostService from "../services/post-service";
 import Rating from "react-rating";
 import { ReactComponent as StarIcon } from "../assets/icons/star.svg";
+import { useParams } from "react-router";
 
 let interval: NodeJS.Timer;
 
 const PostModal = ({ file, open, onClose }: { file: any; open: boolean; onClose: () => void }) => {
+  const { id } = useParams();
   const [rating, setRating] = useState<number | undefined>();
   const [rated, setRated] = useState(false);
   const [uploading, setUploading] = useState(false);
@@ -35,7 +37,7 @@ const PostModal = ({ file, open, onClose }: { file: any; open: boolean; onClose:
 
     try {
       if (file) {
-        await PostService.upload(file, rating);
+        await PostService.upload(id!, file, rating);
       }
       setSucceeded(true);
     } catch (err) {
@@ -76,7 +78,10 @@ const PostModal = ({ file, open, onClose }: { file: any; open: boolean; onClose:
   const SuccessContent = () => {
     return (
       <>
-        <Button onClick={finish}>Yay!</Button>
+        <Image mx="auto" mt={100} src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/3b/Eo_circle_green_checkmark.svg/1200px-Eo_circle_green_checkmark.svg.png" w="150px" h="150px" />
+        <Button mt={10} w={100} mx="auto" onClick={finish}>
+          OK
+        </Button>
       </>
     );
   };

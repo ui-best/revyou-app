@@ -1,10 +1,10 @@
 import axios from "axios";
 
-const API_URL = "http://10.0.0.113:8080";
+const API_URL = "https://api.revyou.digital";
 
 class PlaceService {
-  static async add(name: string, address: string, city: string, postalCode: string) {
-    const res = await axios.post(API_URL + "/place/add", { name, address, city, postalCode });
+  static async add(name: string, address: string, city: string, postalCode: string, iconData?: string) {
+    const res = await axios.post(API_URL + "/place/add", { name, address, city, postalCode, iconData });
     return res.data;
   }
 

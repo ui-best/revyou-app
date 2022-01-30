@@ -1,9 +1,9 @@
-import { Box } from "@chakra-ui/react";
+import { Badge, Box } from "@chakra-ui/react";
 import { useRef } from "react";
 import Rating from "react-rating";
 import { ReactComponent as StarIcon } from "../assets/icons/star.svg";
 
-const Post = ({ user, video, rating }: any) => {
+const Post = ({ user, video, rating, pinned }: any) => {
   const videoRef = useRef<HTMLVideoElement>(null);
 
   const toggle = () => {
@@ -16,7 +16,12 @@ const Post = ({ user, video, rating }: any) => {
 
   return (
     <Box pos="relative" w="100%" h="100%">
-      <video ref={videoRef} src={"http://10.0.0.113:8080/video/" + video} autoPlay muted loop playsInline onClick={toggle} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+      {pinned && (
+        <Badge pos="fixed" top={6} left={6}>
+          Pinned
+        </Badge>
+      )}
+      <video ref={videoRef} src={"https://api.revyou.digital/video/" + video} autoPlay muted loop playsInline onClick={toggle} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
 
       {!!rating && (
         <Box pos="absolute" bottom="150px" left={5}>
