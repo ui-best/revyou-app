@@ -3,27 +3,24 @@ import { useNavigate } from "react-router-dom";
 import HeroGraphic from "../assets/phone-hero.png";
 import HeroVideo from "../assets/hero-video.mp4";
 import { ReactComponent as ScanIcon } from "../assets/icons/scan.svg";
-import CreatePlaceModal from "../components/CreatePlaceModal";
-import { useState } from "react";
+import LogoImg from "../assets/logo.png";
 import DevpostLogo from "../assets/devpost.png";
 import { ReactComponent as ArrowRightIcon } from "../assets/icons/arrow-right.svg";
 import EiffelTowerImg from "../assets/eiffel.png";
+import FeaturesSection from "../components/FeaturesSection";
 
 const Home = () => {
   const navigate = useNavigate();
-  const [showPlaceModal, setShowPlaceModal] = useState(false);
 
   return (
     <Container maxW="full" p={0}>
-      <Stack direction="row" justify="space-between" py={3} px={5}>
-        <Text color="blue.800" p={5} fontSize={18}>
-          RevYOU
-        </Text>
-        <Button mt={10} rounded="md" shadow="lg" bg="#1350ff" color="#fff" fontSize={16} px={9} py={5}>
-          Sign in
+      <Stack h="60px" direction="row" justify="space-between" py={3} px={5}>
+        <Image src={LogoImg} h="100%" />
+        <Button mt={10} rounded="md" shadow="lg" bg="#1350ff" color="#fff" fontSize={16} px={9} py={5} onClick={() => navigate("/places")}>
+          Open App
         </Button>
       </Stack>
-      <Box pos="relative" w="100%" h="70vh" fontFamily="Poppins">
+      <Box pos="relative" w="100%" fontFamily="Poppins">
         <SimpleGrid maxW="7xl" columns={{ base: 1, lg: 2 }} h="80%" align="center" mx="auto">
           <Box my="50px" textAlign="left" px={{ base: 5, lg: 20 }}>
             <Text mt={10} mb={5} color="#1350ff" fontSize={17} lineHeight={1} fontWeight="600" letterSpacing={0} whiteSpace="nowrap">
@@ -40,14 +37,14 @@ const Home = () => {
               With an innovative and entertaining way to engage your audience with short videos while bringing people and businesses closer together
             </Text>
 
-            <Button mt={10} rounded="md" shadow="lg" bg="#1350ff" color="#fff" leftIcon={<ScanIcon width={25} height={25} />} onClick={() => navigate("/scan")} fontSize={18} px={16} py={7}>
+            <Button mt={10} rounded="md" shadow="lg" bg="#1350ff" color="#fff" leftIcon={<ScanIcon width={25} height={25} />} onClick={() => navigate("/scan")} fontSize={18} px={16} py={7} zIndex={10}>
               <Text ml={2}>Scan QR</Text>
             </Button>
           </Box>
 
-          <Box pos="relative" mx="auto">
-            <Image src={HeroGraphic} w={320} h={605} />
-            <Box pos="absolute" h={530} top="38px" left="50%" transform="translateX(-50%)" width="250px" zIndex={-1}>
+          <Box pos="relative" mx="auto" h={605}>
+            <Image src={HeroGraphic} w={320} h="100%" />
+            <Box pos="absolute" h={530} top="37px" left="50%" borderRadius={20} overflow="hidden" transform="translateX(-50%)" width="250px" zIndex={-1}>
               <video src={HeroVideo} muted autoPlay loop style={{ width: "100%", height: "100%", objectFit: "cover" }} />
             </Box>
             <Image pos="absolute" maxW="unset" right={-350} bottom="-100px" src={EiffelTowerImg} w="700px" />
@@ -59,7 +56,13 @@ const Home = () => {
           </Button> */}
       </Box>
 
-      <CreatePlaceModal open={showPlaceModal} onClose={() => setShowPlaceModal(false)} />
+      <FeaturesSection />
+
+      <Stack h={100} bg="#222" p={5} justify="flex-end">
+        <Text color="#fff" fontFamily="Poppins" fontWeight="500">
+          Made by Yabuyeet
+        </Text>
+      </Stack>
     </Container>
   );
 };
